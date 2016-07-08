@@ -78,18 +78,13 @@
 
             <div class="grid-md-9">
                 <article>
-                    <h1>Event API - WidgetExamples</h1>
+                    <h1>Event API - Widget Examples</h1>
                     <p class="lead">Welcome to the event manager widget examples page. Below are examples on how to utilizate the widget js-api. Please include the js-resource on your page before testing.</p>
                     <pre><code class="html">&lt;link rel="stylesheet" href="http://styleguide.dev/dist/css/hbg-prime.css"&gt;</code></pre>
                 </article>
 
-                <article>
-                    <h2>Event List</h2>
-                    <pre><code class="html">&lt;div class="event-api" data-type="list" data-template-source="event-template" &gt&lt;div&gt;</code></pre>
-                </article>
-
                 <div class="box box-panel box-panel-primary">
-                    <h4 class="box-title">Dagens evenemang</h4>
+                    <h4 class="box-title">Utvalda evenemang</h4>
 
                     <ul class="event-api">
                         <li class="event-loading-template"><i class="loading-dots" style="margin: 10px auto;"></i></li>
@@ -131,6 +126,53 @@
 
                     </ul>
                 </div>
+
+                <article>
+                    <h2>Event List code example</h2>
+                    <pre style="max-height: 500px; "><code  class="html">&lt;h4 class=&quot;box-title&quot;&gt;Utvalda evenemang&lt;/h4&gt;
+
+&lt;ul class=&quot;event-api&quot;&gt;
+    &lt;li class=&quot;event-loading-template&quot;&gt;&lt;i class=&quot;loading-dots&quot; style=&quot;margin: 10px auto;&quot;&gt;&lt;/i&gt;&lt;/li&gt;
+
+    &lt;div class=&quot;template hidden&quot;&gt;
+        &lt;li&gt;&lt;a class=&quot;modal-event&quot; data-event-id=&quot;{{event-id}}&quot; href=&quot;#modal-event&quot;&gt;{{event-title}}&lt;/a&gt;&lt;/li&gt;
+    &lt;/div&gt;
+
+    &lt;div class=&quot;modal-template hidden&quot;&gt;
+        &lt;div id=&quot;modal-event&quot; class=&quot;modal modal-backdrop-1 modal-medium&quot; tabindex=&quot;-1&quot; role=&quot;dialog&quot; aria-hidden=&quot;true&quot;&gt;
+            &lt;div class=&quot;modal-content&quot;&gt;
+                &lt;div class=&quot;modal-header&quot;&gt;
+
+                    &lt;h2 class=&quot;modal-title&quot;&gt;{{event-modal-title}}&lt;/h2&gt;
+                &lt;/div&gt;
+                &lt;div class=&quot;modal-body&quot;&gt;
+                    &lt;div class=&quot;grid&quot;&gt;
+                        &lt;div class=&quot;grid-md-4&quot;&gt;
+                            {{event-modal-image}}
+                            {{event-modal-occations}}
+                        &lt;/div&gt;
+                        &lt;div class=&quot;grid-md-8&quot;&gt;
+                            &lt;article&gt;
+                                {{event-modal-content}}
+                            &lt;/article&gt;
+                        &lt;/div&gt;
+                    &lt;/div&gt;
+                &lt;/div&gt;
+                &lt;/div&gt;&lt;!-- /.modal-content --&gt;
+            &lt;a href=&quot;#close&quot; class=&quot;backdrop&quot;&gt;&lt;/a&gt;
+        &lt;/div&gt;&lt;!-- /.modal --&gt;
+    &lt;/div&gt;
+
+    &lt;div class=&quot;error-template hidden&quot;&gt;
+        &lt;li class=&quot;notice warning&quot;&gt;
+            &lt;i class=&quot;fa fa-warning&quot;&gt;&lt;/i&gt; Whoopsie! We could not load the event&#39;s for today. Please try again later.
+        &lt;/li&gt;
+    &lt;/div&gt;
+
+&lt;/ul&gt;</code></pre>
+                </article>
+
+
 
             </div>
         </div>
