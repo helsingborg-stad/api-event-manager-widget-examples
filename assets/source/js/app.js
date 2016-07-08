@@ -146,7 +146,7 @@ Event.Widget.TemplateParser = (function ($) {
                         }.bind(this));
                         modalTemplate = modalTemplate.replace('{{event-modal-occations}}','<div class="box box-panel box-panel-secondary"><h4 class="box-title">Evenemanget inträffar</h4><ul id="modal-occations">' + modalOccationResult + '</ul></div>');
 
-
+                    $('#modal-event').remove();
                     $('body').append(modalTemplate);
 
                     /*this.loadLocation("",module);
