@@ -53,9 +53,13 @@ Event.Widget.TemplateParser = (function ($) {
     };
 
     TemplateParser.prototype.loadEvent = function(module, resource){
+
         $.ajax(resource).done(function(response) {
 
             if(typeof response.data == 'undefined') {
+
+                //Store response on module
+                module.data('json-response', response);
 
                 //Clear target div
                 this.clear(module);
@@ -92,7 +96,7 @@ Event.Widget.TemplateParser = (function ($) {
 
     TemplateParser.prototype.loadFeaturedImage = function(media, module){
         $.ajax(media).done(function(response) {
-            console.log(response);
+            //console.log(response);
         }.bind(this)).fail(function() {
             console.log("Could not load the media id.");
         }.bind(this));
@@ -100,7 +104,7 @@ Event.Widget.TemplateParser = (function ($) {
 
     TemplateParser.prototype.loadContactPerson = function(contact, module){
         $.ajax(contact).done(function(response) {
-            console.log(response);
+            //console.log(response);
         }.bind(this)).fail(function() {
             console.log("Could not load contact person.");
         }.bind(this));
@@ -108,7 +112,7 @@ Event.Widget.TemplateParser = (function ($) {
 
     TemplateParser.prototype.loadLocation = function(location, module) {
         $.ajax(location).done(function(response) {
-            console.log(response);
+            //console.log(response);
         }.bind(this)).fail(function() {
             console.log("Could not load location details.");
         }.bind(this));
@@ -119,25 +123,43 @@ Event.Widget.TemplateParser = (function ($) {
     };
 
     TemplateParser.prototype.click = function(module){
-        jQuery("li a",module).bind('click', { module: module }, function(target){
 
-            var modalTemplate = module.data('modal-template');
-                modalTemplate = modalTemplate.replace('{{event-modal-id}}','');
-                modalTemplate = modalTemplate.replace('{{event-modal-title}}','');
-                modalTemplate = modalTemplate.replace('{{event-modal-content}}','');
-                modalTemplate = modalTemplate.replace('{{event-modal-image}}','');
-            $('body').append(modalTemplate);
+        jQuery("li a",module).on('click',{},function(e){
+
+            var eventId = jQuery(e.target).closest("a.modal-event").data('event-id');
+
+            $.each(module.data('json-response'), function(index,object) {
+
+                if(object.id == eventId) {
+
+                    //Main modal
+                    var modalTemplate = module.data('modal-template');
+                        modalTemplate = modalTemplate.replace('{{event-modal-title}}', object.title.rendered);
+                        modalTemplate = modalTemplate.replace('{{event-modal-content}}',object.content.rendered);
+                        modalTemplate = modalTemplate.replace('{{event-modal-image}}','');
+
+                        //Ocations tempate
+                        var modalOccationResult = "";
+                        $.each(object.occasions, function(occationindex,occation) {
+                            console.log(occation);
+                            modalOccationResult = modalOccationResult + '<li>' + occation.start_date + ' - ' + occation.end_date + '</li>';
+                        }.bind(this));
+                        modalTemplate = modalTemplate.replace('{{event-modal-occations}}','<div class="box box-panel box-panel-secondary"><h4 class="box-title">Evenemanget inträffar</h4><ul id="modal-occations">' + modalOccationResult + '</ul></div>');
 
 
+                    $('body').append(modalTemplate);
 
-            this.loadLocation("",module);
-            this.loadContactPerson("",module);
-            this.loadFeaturedImage("",module);
+                    /*this.loadLocation("",module);
+                    this.loadContactPerson("",module);
+                    this.loadFeaturedImage("",module);*/
+
+                }
+
+            }.bind(this));
 
         }.bind(this));
+
     };
-
-
 
     return new TemplateParser();
 
